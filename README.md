@@ -17,6 +17,6 @@ Steer left, right, accelerate and open doors just like the original desert bus!!
 + Improve bus model
 + Make points system save points across restarts
 + Stone
-
++ Maybe restart server every 360 miles
 
 ![Screenshot (4250)](https://github.com/morgana-x/ScpSL-DesertBus/assets/89588301/5b42390f-c464-469d-925c-1c7b5bcfc766)
