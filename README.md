@@ -1,2 +1,2 @@
 # ScpSL-DesertBus
-Exiled Plugin that adds desert bus gamemode real
+Exiled Plugin that adds desert bus as a custom gamemode.
