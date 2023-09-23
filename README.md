@@ -10,7 +10,7 @@ Steer left, right, accelerate and open doors just like the original desert bus!!
 + Bus
 + Road
 + I'm running out of features to put here!
-+ Swerving off road if your afk
++ Swerving off road if you're afk
 + Anti admin abuse / any fun at all
 
 # Todo:
