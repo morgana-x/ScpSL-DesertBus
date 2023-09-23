@@ -61,6 +61,7 @@ namespace Desert_Bus_SCP_SL
                 if (Vector3.Distance(p.Position, startPos + (Vector3.forward * 15 * x)) > 50)
                 {
                     p.Position = startPos + (Vector3.forward * 15 * x);
+                    p.Position = new Vector3(VirtalPosition.x, p.Position.y, p.Position.z);
                 }
                 x++;
             }
