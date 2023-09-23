@@ -53,16 +53,17 @@ namespace Desert_Bus_SCP_SL
             Vector3 downO = Vector3.up * 0.5f;
             Vector3 RightO = Vector3.right * 1f;
             Vector3 fwd = Vector3.fwd;
-            controlButtons.Button_SteerRight = spawnPickup( position + upO + (RightO *-1.7f));
-            controlButtons.Button_SteerLeft = spawnPickup( position + upO + (RightO * -2.2f));
-            controlButtons.Button_Door = spawnPickup( position + upO + (RightO * -0.5f) + (fwd*0.25f));
-            controlButtons.Button_Acceleration = spawnPickup( position + (upO * 0.5f) + (RightO * -2));
+            controlButtons.Button_SteerRight = spawnPickup( position + (upO*1.5f) + (RightO *-1.7f));
+            controlButtons.Button_SteerLeft = spawnPickup( position + (upO * 1.5f) + (RightO * -2.2f));
+            controlButtons.Button_Door = spawnPickup( position + (upO *0.7f) + (RightO * -1f) + (fwd*0.25f));
+            controlButtons.Button_Acceleration = spawnPickup( position + (upO * 0.55f) + (RightO * -2));
 
             SpawnSeat(position + (upO * 0.3f) + (Vector3.back * 1.5f)  + (RightO * -1.9f));
 
-            /*Primitive SteeringWheel = Primitive.Create(position+ upO + (RightO * -1.7f));
-            SteeringWheel.Type = PrimitiveType.Cylinder;
-            SteeringWheel.Scale = */
+            Primitive SteeringWheel = Primitive.Create(position+ (upO * 1.5f) + (RightO * -1.3f) + (RightO * -0.5f) + (RightO * -0.125f));
+            SteeringWheel.Scale = new Vector3(0.5f, 0.5f, 0.1f);
+            SteeringWheel.Type = PrimitiveType.Cube;
+            SteeringWheel.Color = Color.black;
         }
         Primitive SpeedDialHand;
         public void SpawnSpeedDial(Vector3 position)
@@ -153,8 +154,8 @@ namespace Desert_Bus_SCP_SL
 
             for (int x =0 ; x < 6; x++)
             {
-                SpawnSeat(position + (Vector3.up * 0.4f) + (Vector3.right * 1.5f) + (Vector3.forward * 1.5f) + (Vector3.back * (x * 1.25f)));
-                SpawnSeat(position + (Vector3.up * 0.4f) + (Vector3.left  * 1.5f) + (Vector3.forward * 1.5f) + (Vector3.back * (x * 1.25f)));
+                SpawnSeat(position + (Vector3.up * 0.3f) + (Vector3.right * 1.5f) + (Vector3.forward * 1.5f) + (Vector3.back * (x * 1.25f)));
+                SpawnSeat(position + (Vector3.up * 0.3f) + (Vector3.left  * 1.5f) + (Vector3.forward * 1.5f) + (Vector3.back * (x * 1.25f)));
             }
 
             Exiled.API.Features.Toys.Light interiorLight = Exiled.API.Features.Toys.Light.Create();
@@ -281,6 +282,7 @@ namespace Desert_Bus_SCP_SL
             {
                 foreach (Primitive p in DoorObject)
                 {
+                    p.Collidable = true;
                     p.Spawn();
                 }
             }
@@ -288,58 +290,94 @@ namespace Desert_Bus_SCP_SL
             {
                 foreach (Primitive p in DoorObject)
                 {
+                    p.Collidable = false;
                     p.UnSpawn();
                 }
             }
 
         }
         public float steering = 0f;
+        public float lastSteer = 0f;
+        public System.Random rnd = new System.Random();
         public void SteerLeft()
         {
             // VirtualPosition = VirtualPosition + (Vector3.left * 5);
             steering = steering + 0.1f; //- ((speed / Plugin.Instance.Config.busConfig.maxSpeed) / 10); //- 0.1f;
-            //VirtualEulerAngles = VirtualEulerAngles + new Vector3(0,-5,0);
+                                        //VirtualEulerAngles = VirtualEulerAngles + new Vector3(0,-5,0);
+            lastSteer = Time.time + Plugin.Instance.Config.busConfig.AFKSwerveTime;
 
         }
         public void SteerRight()
         {
             //VirtualPosition = VirtualPosition + (Vector3.right * 5);
             steering = steering - 0.1f; //+ ((speed / Plugin.Instance.Config.busConfig.maxSpeed) / 10); //+ 0.1f;
+            lastSteer = Time.time +Plugin.Instance.Config.busConfig.AFKSwerveTime;
             //VirtualEulerAngles = VirtualEulerAngles + new Vector3(0, 5, 0);
         }
         public void Accelerate()
         {
+            if (speed <= 0)
+            {
+                lastSteer = (Time.time + Plugin.Instance.Config.busConfig.AFKSwerveTime * 2);
+            }
             speed = speed + Plugin.Instance.Config.busConfig.accelerationSpeed;
             if (speed > Plugin.Instance.Config.busConfig.maxSpeed)
                 speed = Plugin.Instance.Config.busConfig.maxSpeed;
         }
+        public float roadBoundry = 5f;
+        public bool isOnSideOfRoad()
+        {
+            if (VirtualPosition.x < -1 * roadBoundry)
+                return true;
+            if (VirtualPosition.x > roadBoundry)
+                return true;
+            return false;
+        }
         public void Update()
         {
-            Distance = Distance + (speed / 3.6f);
-            speed = speed - Plugin.Instance.Config.busConfig.deccelerationSpeed;
-            if (speed > Plugin.Instance.Config.busConfig.maxSpeed)
-                speed = Plugin.Instance.Config.busConfig.maxSpeed;
-            else if (speed < 0)
-                speed = 0;
-            if (steering != 0 )
+            if (steering != 0)
             {
                 int d = 1;
                 if (steering < 0)
                     d = -1;
-                steering = steering - ( d * 0.005f);
-                if ( Math.Abs(steering) <= 0.005f )
+                steering = steering - (d * 0.005f);
+                if (Math.Abs(steering) <= 0.005f)
                 {
                     steering = 0;
                 }
-                
+
             }
             if (speed == 0)
                 return;
+            Distance = Distance + (speed / 3.6f);
+
+
+            float friction = 1;
+            if (isOnSideOfRoad())
+                friction = 10f;
+            speed = speed - (Plugin.Instance.Config.busConfig.deccelerationSpeed * friction);
+            if (speed > Plugin.Instance.Config.busConfig.maxSpeed)
+                speed = Plugin.Instance.Config.busConfig.maxSpeed;
+            else if (speed < 0)
+                speed = 0;
+
+            if (Plugin.Instance.Config.busConfig.AFKSwerve && (Time.time > lastSteer))
+            {
+                lastSteer = Time.time + (Plugin.Instance.Config.busConfig.AFKSwerveTime * 2f);
+                int dir = -1;
+                if (rnd.NextDouble() > 0.5f)
+                    dir = 1;
+                steering = steering + (dir * 0.2f);
+            }
+
+
+
+
             VirtualPosition = VirtualPosition + (Vector3.right * steering * (speed / Plugin.Instance.Config.busConfig.maxSpeed));
-            if (VirtualPosition.x < -12)
-                VirtualPosition.x = -12;
-            if (VirtualPosition.x > 12)
-                VirtualPosition.x = 12;
+            if (VirtualPosition.x < -1 * (roadBoundry + 0.5f))
+                VirtualPosition.x = -1 * (roadBoundry + 0.5f);
+            if (VirtualPosition.x > roadBoundry + 0.5f)
+                VirtualPosition.x = roadBoundry + 0.5f;
             VirtualEulerAngles.y = steering;
             //VirtualEulerAngles = VirtualEulerAngles + new Vector3(0, ((VirtualEulerAngles.y / VirtualEulerAngles.y) * -1), 0);
 

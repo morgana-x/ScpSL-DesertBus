@@ -43,7 +43,8 @@ namespace Desert_Bus_SCP_SL
 
         public List<Primitive> whiteLines = new List<Primitive>();
 
-        public int roadLength = 100;
+        public int roadLength = 50;
+        int progress = 0;
         public void updatePosition(Vector3 VirtalPosition, Vector3 VirtualEularAngles)
         {
             foreach (Primitive p in stationaryPieces)
@@ -55,13 +56,11 @@ namespace Desert_Bus_SCP_SL
             int x = 0;
             foreach (Primitive p in whiteLines)
             {
-                //p.Rotation.eulerAngles.Set(VirtualEularAngles.x, VirtualEularAngles.y, VirtualEularAngles.z);
                 p.Position = new Vector3(VirtalPosition.x, p.Position.y, p.Position.z);// VirtalPosition.x;
-                p.Position = p.Position + (Vector3.forward * (bus.speed / Plugin.Instance.Config.busConfig.maxSpeed) * 9.5f);
-                //p.Rotation = p.Rotation;
-                if (Vector3.Distance(startPos, p.Position) > roadLength)
+                p.Position = p.Position + (Vector3.forward * (bus.speed / Plugin.Instance.Config.busConfig.maxSpeed) * 5);
+                if (Vector3.Distance(p.Position, startPos + (Vector3.forward * 15 * x)) > 50)
                 {
-                    p.Position = startPos + (Vector3.forward * 15 * x * (bus.speed / Plugin.Instance.Config.busConfig.maxSpeed)) + (Vector3.back * (roadLength  / 2));
+                    p.Position = startPos + (Vector3.forward * 15 * x);
                 }
                 x++;
             }
@@ -76,7 +75,7 @@ namespace Desert_Bus_SCP_SL
             stationaryDesert.Type = PrimitiveType.Cube;
 
             Primitive stationaryRoad = Primitive.Create(Position + (Vector3.up * 0.1f), scale: roadScale);
-            stationaryRoad.Color = Color.black;
+            stationaryRoad.Color = Color.gray;
             stationaryRoad.Type = PrimitiveType.Cube;
 
 
@@ -89,7 +88,7 @@ namespace Desert_Bus_SCP_SL
             //Vector3 whiteScale = (Vector3.forward * 5) + (Vector3.up * 0.15f) + (Vector3.right * 1f);
             Vector3 whiteScale = (Vector3.forward * 5) + (Vector3.up * 0.15f) + (Vector3.right * 1f);
             startPos = Position + (Vector3.back * (roadLength/2)) + (Vector3.up * 0.15f);
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < 5; x++)
             {
                 Primitive whiteLine = Primitive.Create(startPos + (Vector3.forward * 15 * x), scale: whiteScale);
                 whiteLine.Color = Color.yellow;

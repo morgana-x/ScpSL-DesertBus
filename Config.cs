@@ -11,6 +11,9 @@ namespace Desert_Bus_SCP_SL
         [Description("Should bus randomly swerve into side of road without input")]
         public bool AFKSwerve { get; set; } = true;
 
+        [Description("Amount of time afk from steering wheel until swerve")]
+        public float AFKSwerveTime { get; set; } = 10f;
+
         [Description("Max bus speed")]
         public float maxSpeed = 35f; // meteres per second
 
