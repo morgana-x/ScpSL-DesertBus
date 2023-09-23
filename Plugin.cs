@@ -27,6 +27,8 @@ namespace Desert_Bus_SCP_SL
 
             Server.IsHeavilyModded = true;
 
+            Exiled.API.Features.Log.Info( "\n" + Plugin.Instance.Config.serverConfig.Logo);
+
         }
 
         public override void OnDisabled()

@@ -52,6 +52,16 @@ namespace Desert_Bus_SCP_SL
         [Description("Should staff be able to use cassie")]
         public bool CassieEnabled { get; set; } = false;
     }
+
+    public class ServerConfig
+    {
+        public string Logo { get; set; } = @"██████╗ ███████╗███████╗███████╗██████╗ ████████╗    ██████╗ ██╗   ██╗███████╗
+██╔══██╗██╔════╝██╔════╝██╔════╝██╔══██╗╚══██╔══╝    ██╔══██╗██║   ██║██╔════╝
+██║  ██║█████╗  ███████╗█████╗  ██████╔╝   ██║       ██████╔╝██║   ██║███████╗
+██║  ██║██╔══╝  ╚════██║██╔══╝  ██╔══██╗   ██║       ██╔══██╗██║   ██║╚════██║
+██████╔╝███████╗███████║███████╗██║  ██║   ██║       ██████╔╝╚██████╔╝███████║
+╚═════╝ ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝       ╚═════╝  ╚═════╝ ╚══════╝";
+    }
     public class Config : IConfig
     {
         public bool IsEnabled { get; set; } = true;
@@ -63,6 +73,8 @@ namespace Desert_Bus_SCP_SL
         public PlayerConfig playerConfig { get; set; } = new PlayerConfig();
 
         public RemoteAdminConfig remoteAdminConfig { get; set; } = new RemoteAdminConfig();
+
+        public ServerConfig serverConfig { get; set; } = new ServerConfig();
 
     }
 }

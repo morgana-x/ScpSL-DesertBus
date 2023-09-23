@@ -108,11 +108,11 @@ namespace Desert_Bus_SCP_SL
 
         public void SpawnSeat(Vector3 position)
         {
-            Primitive SeatBack = Primitive.Create(position + (Vector3.up * 0.725f), scale: new Vector3(1, 1.5f, 0.2f));
+            Primitive SeatBack = Primitive.Create(position + (Vector3.up * 0.70f), scale: new Vector3(1, 1.5f, 0.2f));
             SeatBack.Type = PrimitiveType.Cube;
             SeatBack.Color = Color.red;
 
-            Primitive SeatBottom = Primitive.Create(position + (Vector3.up * 0.1f) + (Vector3.forward * 0.25f), scale: new Vector3(1, 0.2f, 0.5f));
+            Primitive SeatBottom = Primitive.Create(position + (Vector3.forward * 0.25f), scale: new Vector3(1, 0.2f, 0.5f));
             SeatBottom.Type = PrimitiveType.Cube;
             SeatBottom.Color = Color.red;
         }
@@ -135,18 +135,18 @@ namespace Desert_Bus_SCP_SL
 
             Vector3 floorScale = (Vector3.forward * 10) + (Vector3.right * 5) + (Vector3.up * 0.5f);
 
-            Primitive SteeringWheelBack = Primitive.Create(position + (Vector3.left * 2) + (Vector3.forward * 4.85f) + (Vector3.up * 0.6f), scale: new Vector3(1, 1.2f, 0.225f));
+            Primitive SteeringWheelBack = Primitive.Create(position + (Vector3.left * 1.7f) + (Vector3.forward * 4.85f) + (Vector3.up * 0.7f), scale: new Vector3(1.25f, 1.4f, 0.22f));
             SteeringWheelBack.Type = PrimitiveType.Cube;
-            SteeringWheelBack.Color = Color.red;
+            SteeringWheelBack.Color = Color.gray;
 
-            Primitive Console = Primitive.Create(position + (Vector3.up * 0.5f) + (Vector3.forward * 4.85f), scale: new Vector3(5, 0.45f, 0.25f));
+            Primitive Console = Primitive.Create(position + (Vector3.up * 0.5f) + (Vector3.forward * 4.85f), scale: new Vector3(5, 0.5f, 0.22f));
             Console.Type = PrimitiveType.Cube;
-            Console.Color = Color.red;
+            Console.Color = Color.gray;
 
             SpawnButtons(position + (Vector3.forward * 4.5f));
             Primitive floorTemp = Primitive.Create(position, scale: floorScale) ;
             floorTemp.Type = PrimitiveType.Cube;
-            floorTemp.Color = Color.red;
+            floorTemp.Color = Color.black;
 
             Primitive roofTemp = Primitive.Create(position + Vector3.up * 3f, scale: floorScale);
             roofTemp.Type = PrimitiveType.Cube;
