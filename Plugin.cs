@@ -1,4 +1,5 @@
-﻿using Exiled.API.Features;
+﻿using CommandSystem.Commands.RemoteAdmin.Doors;
+using Exiled.API.Features;
 using System.Linq;
 
 namespace Desert_Bus_SCP_SL
@@ -68,6 +69,9 @@ namespace Desert_Bus_SCP_SL
 
             Exiled.Events.Handlers.Player.Spawned += _handlers.OnPlayerSpawned;
 
+            Exiled.Events.Handlers.Cassie.SendingCassieMessage += _handlers.OnCassieMessage;
+
+
         }
 
         private void UnregisterEvents()
@@ -94,7 +98,9 @@ namespace Desert_Bus_SCP_SL
 
             Exiled.Events.Handlers.Player.Spawning -= _handlers.OnPlayerSpawning;
 
-            Exiled.Events.Handlers.Player.Spawned += _handlers.OnPlayerSpawned;
+            Exiled.Events.Handlers.Player.Spawned -= _handlers.OnPlayerSpawned;
+
+            Exiled.Events.Handlers.Cassie.SendingCassieMessage -= _handlers.OnCassieMessage;
 
             _handlers.DeInit();
             _handlers = null;

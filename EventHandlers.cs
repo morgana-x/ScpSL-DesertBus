@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using MEC;
 using Exiled.Events.EventArgs.Server;
+using Exiled.Events.EventArgs.Cassie;
 
 namespace Desert_Bus_SCP_SL
 {
@@ -88,6 +89,11 @@ namespace Desert_Bus_SCP_SL
             {
                 ev.IsAllowed = false;
             }
+        }
+
+        public void OnCassieMessage(SendingCassieMessageEventArgs ev)
+        {
+            ev.IsAllowed = false;
         }
 
         public void OnPlayerSpawning(SpawningEventArgs ev)
