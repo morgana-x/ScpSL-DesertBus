@@ -15,6 +15,7 @@ Steer left, right, accelerate and open doors just like the original desert bus!!
 
 # Todo:
 + Improve bus model
++ Ingame speed dial, and distance meter 
 + Make points system save points across restarts
 + Stone
 + Maybe restart server every 360 miles
