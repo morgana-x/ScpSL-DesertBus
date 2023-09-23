@@ -49,9 +49,18 @@ namespace Desert_Bus_SCP_SL
         public void OnPlayerVerified(VerifiedEventArgs ev)
         {
             ev.Player.RoleManager.ServerSetRole(Plugin.Instance.Config.playerConfig.spawnRoles.RandomItem(), PlayerRoles.RoleChangeReason.RoundStart);
+            if (Plugin.Instance.bus != null)
+            {
+                Plugin.Instance.bus.points.updateCustomInfo(ev.Player.UserId);
+            }
         }
         public void OnPlayerLeft(LeftEventArgs ev) 
         {
+            /*if (Player.List.Count <= 0)
+            {
+                Timing.PauseCoroutines(updateCoroutineHandle);
+                Log.Debug("Pausing couroutine handle because there are no players!");
+            }*/
         }
         public void OnPlayerChangingRole(ChangingRoleEventArgs ev)
         {
@@ -88,6 +97,10 @@ namespace Desert_Bus_SCP_SL
         public void OnPlayerSpawned(SpawnedEventArgs ev)
         {
             ev.Player.Teleport(Plugin.Instance.bus.SpawnPosition);
+            if (Plugin.Instance.bus != null)
+            {
+                Plugin.Instance.bus.points.updateCustomInfo(ev.Player.UserId);
+            }
         }
         public void OnPlayerNoClip(TogglingNoClipEventArgs ev)
         {

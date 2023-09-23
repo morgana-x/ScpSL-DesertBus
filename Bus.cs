@@ -325,6 +325,7 @@ namespace Desert_Bus_SCP_SL
                 speed = Plugin.Instance.Config.busConfig.maxSpeed;
         }
         public float roadBoundry = 5f;
+        public Points points;
         public bool isOnSideOfRoad()
         {
             if (VirtualPosition.x < -1 * roadBoundry)
@@ -350,7 +351,11 @@ namespace Desert_Bus_SCP_SL
             if (speed == 0)
                 return;
             Distance = Distance + (speed / 3.6f);
-
+            if (Distance > 579364)
+            {
+                points.givePointsAll();
+                Distance = 0;
+            }
 
             float friction = 1;
             if (isOnSideOfRoad())
@@ -389,6 +394,7 @@ namespace Desert_Bus_SCP_SL
         {
             controlButtons = new BusControls(this);
             road = new Road(this);
+            points = new Points();
         }
     }
 }
