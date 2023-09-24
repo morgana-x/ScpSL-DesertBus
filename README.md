@@ -14,10 +14,11 @@ Steer left, right, accelerate and open doors just like the original desert bus!!
 + Anti admin abuse / any fun at all
 
 # Todo:
-+ Improve bus model
++ Improve bus model / possible schematic support
 + Ingame speed dial, and distance meter 
 + Make points system save points across restarts
 + Stone
 + Maybe restart server every 360 miles
++ もしこれを読んだらお前は日本語上手でしょう。多分　日本語の翻訳を作った方がいいでしょう。
 
 ![Screenshot (4252)](https://github.com/morgana-x/ScpSL-DesertBus/assets/89588301/a9ea1715-6620-4703-8184-285585c3e133)
