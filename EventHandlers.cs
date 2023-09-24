@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using MEC;
 using Exiled.Events.EventArgs.Server;
 using Exiled.Events.EventArgs.Cassie;
+using Exiled.Events.EventArgs.Map;
+using Exiled.Events.EventArgs.Warhead;
 
 namespace Desert_Bus_SCP_SL
 {
@@ -99,6 +101,15 @@ namespace Desert_Bus_SCP_SL
         public void OnPlayerSpawning(SpawningEventArgs ev)
         {
             ev.Position = Plugin.Instance.bus.SpawnPosition;
+        }
+
+        public void Decontaminating(DecontaminatingEventArgs ev)
+        {
+            ev.IsAllowed = false;
+        }
+        public void WarheadDetonating(DetonatingEventArgs ev)
+        {
+            ev.IsAllowed = false;
         }
         public void OnPlayerSpawned(SpawnedEventArgs ev)
         {

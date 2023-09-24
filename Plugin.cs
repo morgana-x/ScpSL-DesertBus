@@ -71,6 +71,10 @@ namespace Desert_Bus_SCP_SL
 
             Exiled.Events.Handlers.Cassie.SendingCassieMessage += _handlers.OnCassieMessage;
 
+            Exiled.Events.Handlers.Map.Decontaminating += _handlers.Decontaminating;
+
+            Exiled.Events.Handlers.Warhead.Detonating += _handlers.WarheadDetonating;
+
 
         }
 
@@ -101,6 +105,10 @@ namespace Desert_Bus_SCP_SL
             Exiled.Events.Handlers.Player.Spawned -= _handlers.OnPlayerSpawned;
 
             Exiled.Events.Handlers.Cassie.SendingCassieMessage -= _handlers.OnCassieMessage;
+
+            Exiled.Events.Handlers.Map.Decontaminating -= _handlers.Decontaminating;
+
+            Exiled.Events.Handlers.Warhead.Detonating -= _handlers.WarheadDetonating;
 
             _handlers.DeInit();
             _handlers = null;

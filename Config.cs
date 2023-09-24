@@ -15,7 +15,7 @@ namespace Desert_Bus_SCP_SL
         public float AFKSwerveTime { get; set; } = 10f;
 
         [Description("Max bus speed")]
-        public float maxSpeed = 15.6464f; // meteres per second
+        public float maxSpeed = 20.1168f; // meteres per second
 
         [Description("Acceleration of bus")]
         public float accelerationSpeed = 0.5f;
