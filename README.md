@@ -21,4 +21,6 @@ Steer left, right, accelerate and open doors just like the original desert bus!!
 + Maybe restart server every 360 miles
 + もしこれを読んだらお前は日本語上手でしょう。多分　日本語の翻訳を作った方がいいでしょう。
 
+![Screenshot (4254)](https://github.com/morgana-x/ScpSL-DesertBus/assets/89588301/77bc60df-f6fd-4d3d-ab67-08554a1ba1be)
+
 ![Screenshot (4252)](https://github.com/morgana-x/ScpSL-DesertBus/assets/89588301/a9ea1715-6620-4703-8184-285585c3e133)
