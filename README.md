@@ -9,16 +9,14 @@ Steer left, right, accelerate and open doors just like the original desert bus!!
 + Points system, get a point for every 360 miles driven
 + Bus
 + Road
++ Cool seven segment displays that wasted an hour of my life
 + I'm running out of features to put here!
 + Swerving off road if you're afk
 + Anti admin abuse / any fun at all
 
 # Todo:
 + Improve bus model / possible schematic support
-+ Ingame speed dial, and distance meter 
 + Make points system save points across restarts
-+ Stone
-+ Maybe restart server every 360 miles
 + もしこれを読んだらお前は日本語上手でしょう。多分　日本語の翻訳を作った方がいいでしょう。
 
 ![Screenshot (4254)](https://github.com/morgana-x/ScpSL-DesertBus/assets/89588301/77bc60df-f6fd-4d3d-ab67-08554a1ba1be)
