@@ -15,13 +15,16 @@ namespace Desert_Bus_SCP_SL
         public float AFKSwerveTime { get; set; } = 10f;
 
         [Description("Max bus speed")]
-        public float maxSpeed = 35f; // meteres per second
+        public float maxSpeed = 15.6464f; // meteres per second
 
         [Description("Acceleration of bus")]
-        public float accelerationSpeed = 2.0f;
+        public float accelerationSpeed = 0.5f;
 
         [Description("decceleration of bus")]
-        public float deccelerationSpeed = 0.01f;
+        public float deccelerationSpeed = 0.001f;
+
+        [Description("Friction multiplier when offroad")]
+        public float frictionMultiplier { get; set; } = 10;
     }
     public class PlayerConfig
     {

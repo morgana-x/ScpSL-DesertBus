@@ -46,7 +46,7 @@ namespace Desert_Bus_SCP_SL
             p.Spawn();
             return p;
         }
-
+        public SevenSegmentDisplay speedDisplay;
         public void SpawnButtons(Vector3 position)
         {
             Vector3 upO = Vector3.up * 1f;
@@ -55,7 +55,7 @@ namespace Desert_Bus_SCP_SL
             Vector3 fwd = Vector3.fwd;
             controlButtons.Button_SteerRight = spawnPickup( position + (upO*1.5f) + (RightO *-1.7f));
             controlButtons.Button_SteerLeft = spawnPickup( position + (upO * 1.5f) + (RightO * -2.2f));
-            controlButtons.Button_Door = spawnPickup( position + (upO *0.7f) + (RightO * -1f) + (fwd*0.25f));
+            controlButtons.Button_Door = spawnPickup( position + (upO *0.7f) + (RightO * -1f));
             controlButtons.Button_Acceleration = spawnPickup( position + (upO * 0.55f) + (RightO * -2));
 
             SpawnSeat(position + (upO * 0.3f) + (Vector3.back * 1.5f)  + (RightO * -1.9f));
@@ -64,7 +64,14 @@ namespace Desert_Bus_SCP_SL
             SteeringWheel.Scale = new Vector3(0.5f, 0.5f, 0.1f);
             SteeringWheel.Type = PrimitiveType.Cube;
             SteeringWheel.Color = Color.black;
+
+
+            distanceDisplay = new SevenSegmentDisplay(position + (upO * 1f) + (RightO * -1.3f), 3, Sscale:0.05f);
+            speedDisplay = new SevenSegmentDisplay(position + (upO * 1.3f) + (RightO * -1.3f), 3, Sscale: 0.05f);
+            //distanceDisplay.setNumber(352);
+
         }
+        SevenSegmentDisplay distanceDisplay;
         Primitive SpeedDialHand;
         public void SpawnSpeedDial(Vector3 position)
         {
@@ -143,7 +150,7 @@ namespace Desert_Bus_SCP_SL
             Console.Type = PrimitiveType.Cube;
             Console.Color = Color.gray;
 
-            SpawnButtons(position + (Vector3.forward * 4.5f));
+            SpawnButtons(position + (Vector3.forward * 4.7f));
             Primitive floorTemp = Primitive.Create(position, scale: floorScale) ;
             floorTemp.Type = PrimitiveType.Cube;
             floorTemp.Color = Color.black;
@@ -334,6 +341,8 @@ namespace Desert_Bus_SCP_SL
                 return true;
             return false;
         }
+        public int DistanceMiles = 0;
+        public int LastSpeedMiles = 0;
         public void Update()
         {
             if (steering != 0)
@@ -350,21 +359,38 @@ namespace Desert_Bus_SCP_SL
             }
             if (speed == 0)
                 return;
-            Distance = Distance + (speed / 3.6f);
+            Distance = Distance + (speed);
+            //Log.Debug(Distance.ToString() + " | " + (Distance * 0.000621371).ToString());
+            int distanceMiles = (int)Math.Round((double)Distance * 0.000621371, 0);
+            if (DistanceMiles != distanceMiles)
+            {
+                distanceDisplay.setNumber(distanceMiles); // I think this is in miles (Idk im australian, stupid american stuff!!~212`~)
+                DistanceMiles = distanceMiles;
+            }
             if (Distance > 579364)
             {
                 points.givePointsAll();
+                foreach(Player pl in Player.List)
+                {
+                    pl.Broadcast(5, "<color=yellow>You have travelled 367 miles!</color>\n<color=green>+1</color> Point");
+                }
                 Distance = 0;
             }
 
             float friction = 1;
             if (isOnSideOfRoad())
-                friction = 10f;
+                friction = Plugin.Instance.Config.busConfig.frictionMultiplier;
             speed = speed - (Plugin.Instance.Config.busConfig.deccelerationSpeed * friction);
             if (speed > Plugin.Instance.Config.busConfig.maxSpeed)
                 speed = Plugin.Instance.Config.busConfig.maxSpeed;
             else if (speed < 0)
                 speed = 0;
+            int speedMiles = (int)Math.Round(speed * 2.2369,0);
+            if (LastSpeedMiles != speedMiles)
+            {
+                speedDisplay.setNumber(speedMiles);
+                LastSpeedMiles = speedMiles;
+            }
 
             if (Plugin.Instance.Config.busConfig.AFKSwerve && (Time.time > lastSteer))
             {

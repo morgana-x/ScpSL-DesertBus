@@ -24,28 +24,28 @@ namespace Desert_Bus_SCP_SL
             }
             else if (item == Button_SteerLeft)
             {
-                pl.ShowHint("steered left");
+                //pl.ShowHint("steered left");
                 bus.SteerLeft();
                 //SteerLeft(pl);
                 return true;
             }
             else if (item == Button_SteerRight)
             {
-                pl.ShowHint("steered right");
+                //pl.ShowHint("steered right");
                 bus.SteerRight();
                 //SteerRight(pl);
                 return true;
             }
             else if (item == Button_Door)
             {
-                pl.ShowHint("toggled door");
+                //pl.ShowHint("toggled door");
                 bus.ToggleDoor();
                 //ToggleDoor(pl);
                 return true;
             }
             else if (item == Button_Acceleration)
             {
-                pl.ShowHint("accelerated.\nSpeed: (" + bus.speed.ToString() + "/" + Plugin.Instance.Config.busConfig.maxSpeed.ToString() + ")");
+                //pl.ShowHint("accelerated.\nSpeed: (" + bus.speed.ToString() + "/" + Plugin.Instance.Config.busConfig.maxSpeed.ToString() + ")");
                 bus.Accelerate();
                 //Accelerate(pl);
                 return true;
