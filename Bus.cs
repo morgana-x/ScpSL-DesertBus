@@ -343,8 +343,13 @@ namespace Desert_Bus_SCP_SL
         }
         public int DistanceMiles = 0;
         public int LastSpeedMiles = 0;
+
+        public float deltaTime = 1;
+        public float lastTime = 0;
         public void Update()
         {
+            deltaTime = Time.time - lastTime;
+            lastTime = Time.time;
             if (steering != 0)
             {
                 int d = 1;
@@ -359,7 +364,7 @@ namespace Desert_Bus_SCP_SL
             }
             if (speed == 0)
                 return;
-            Distance = Distance + (speed);
+            Distance = Distance + (speed * deltaTime);
             //Log.Debug(Distance.ToString() + " | " + (Distance * 0.000621371).ToString());
             int distanceMiles = (int)Math.Round((double)Distance * 0.000621371, 0);
             if (DistanceMiles != distanceMiles)
@@ -412,7 +417,7 @@ namespace Desert_Bus_SCP_SL
             VirtualEulerAngles.y = steering;
             //VirtualEulerAngles = VirtualEulerAngles + new Vector3(0, ((VirtualEulerAngles.y / VirtualEulerAngles.y) * -1), 0);
 
-            road.updatePosition(VirtualPosition, VirtualEulerAngles);
+            road.updatePosition(VirtualPosition, deltaTime);
             
         }
 

@@ -45,7 +45,7 @@ namespace Desert_Bus_SCP_SL
 
         public int roadLength = 50;
         int progress = 0;
-        public void updatePosition(Vector3 VirtalPosition, Vector3 VirtualEularAngles)
+        public void updatePosition(Vector3 VirtalPosition,float deltaTime) //Vector3 VirtualEularAngles, float deltaTime)
         {
             foreach (Primitive p in stationaryPieces)
             {
@@ -57,10 +57,10 @@ namespace Desert_Bus_SCP_SL
             foreach (Primitive p in whiteLines)
             {
                 p.Position = new Vector3(VirtalPosition.x, p.Position.y, p.Position.z);// VirtalPosition.x;
-                p.Position = p.Position + (Vector3.forward * (bus.speed / Plugin.Instance.Config.busConfig.maxSpeed) * 5);
-                if (Vector3.Distance(p.Position, startPos + (Vector3.forward * 15 * x)) > 50)
+                p.Position = p.Position + (Vector3.back * bus.speed *deltaTime);//(bus.speed / Plugin.Instance.Config.busConfig.maxSpeed) * deltaTime * 5);
+                if (Vector3.Distance(p.Position, startPos + (Vector3.forward * 25 * x)) > 50)
                 {
-                    p.Position = startPos + (Vector3.forward * 15 * x);
+                    p.Position = startPos + (Vector3.forward * 25 * x);
                     p.Position = new Vector3(VirtalPosition.x, p.Position.y, p.Position.z);
                 }
                 x++;
@@ -88,10 +88,10 @@ namespace Desert_Bus_SCP_SL
             stationaryPieces.Add(stationaryDesert2);
             //Vector3 whiteScale = (Vector3.forward * 5) + (Vector3.up * 0.15f) + (Vector3.right * 1f);
             Vector3 whiteScale = (Vector3.forward * 5) + (Vector3.up * 0.15f) + (Vector3.right * 1f);
-            startPos = Position + (Vector3.back * (roadLength/2)) + (Vector3.up * 0.15f);
+            startPos = Position + (Vector3.up * 0.15f); //+ (Vector3.back * (roadLength/2)) + (Vector3.up * 0.15f);
             for (int x = 0; x < 5; x++)
             {
-                Primitive whiteLine = Primitive.Create(startPos + (Vector3.forward * 15 * x), scale: whiteScale);
+                Primitive whiteLine = Primitive.Create(startPos + (Vector3.forward * 25 * x), scale: whiteScale);
                 whiteLine.Color = Color.yellow;
                 whiteLine.Type = PrimitiveType.Cube;
                 whiteLines.Add(whiteLine);
