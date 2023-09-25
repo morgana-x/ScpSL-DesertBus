@@ -20,6 +20,4 @@ Steer left, right, accelerate and open doors just like the original desert bus!!
 + Random objects like signs and bushes that pass by
 + もしこれを読んだらお前は日本語上手でしょう。多分　日本語の翻訳を作った方がいいでしょう。
 
-![Screenshot (4254)](https://github.com/morgana-x/ScpSL-DesertBus/assets/89588301/77bc60df-f6fd-4d3d-ab67-08554a1ba1be)
-
-![Screenshot (4252)](https://github.com/morgana-x/ScpSL-DesertBus/assets/89588301/a9ea1715-6620-4703-8184-285585c3e133)
+![Screenshot (4256)](https://github.com/morgana-x/ScpSL-DesertBus/assets/89588301/6f62a83a-a275-46b6-a4c9-751db5758fbd)
