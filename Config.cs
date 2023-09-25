@@ -21,7 +21,7 @@ namespace Desert_Bus_SCP_SL
         public float accelerationSpeed = 0.5f;
 
         [Description("decceleration of bus")]
-        public float deccelerationSpeed = 0.001f;
+        public float deccelerationSpeed = 0.15f;
 
         [Description("Friction multiplier when offroad")]
         public float frictionMultiplier { get; set; } = 10;

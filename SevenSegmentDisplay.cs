@@ -83,43 +83,27 @@ namespace Desert_Bus_SCP_SL
             {
                 return;
             }
-            //Exiled.API.Features.Log.Debug("Setting number to " + n);
             currentDigit = n;
-            //Log.Debug(n);
             for (int x=6; x >= 0; x--)
             {
                 Primitive p = primitives.ElementAt(x);
-               // Log.Debug(p);
                 if ( DigitLookUp[n][x] == '0')
                 {
-                    //p.UnSpawn();
-                    //p.Color = Color.white;
-                    //p.Base.colo
                     if (visible[x] != '0')
                     {
-                        p.Color = Color.white;
-                       // p.Spawn();
+                        //p.Color = Color.white;
+                        p.Spawn();
                     }
                     visible[x] = '0';
-                    //Exiled.API.Features.Log.Debug("Set color to white!");
-                    // p.Base.NetworkMaterialColor = Color.white;
-                    //pp.Color = Color.white;
-                   // p.Base.MaterialColor = Color.white;
                 }
                 else
                 {
-                    //pp.Color = Color.black;
-                    //p.Base.MaterialColor = Color.black;
-                    //p.Base.NetworkMaterialColor = Color.red;
                     if (visible[x] != '1')
                     {
-                        p.Color = Color.black;
-                       // p.UnSpawn();
+                        //p.Color = Color.black;
+                        p.UnSpawn();
                     }
                     visible[x] = '1';
-            
-                    //p.Color = Color.black;
-                    //p.Spawn();
                 }
 
             }
@@ -144,11 +128,15 @@ namespace Desert_Bus_SCP_SL
             for (int x =0; x < 7; x++) 
             {
                 Vector3 p = position + (primitivePosLookup[x] * scale);
-                Primitive primitive = Primitive.Create( PrimitiveType.Cube, p, scale: (primitiveScaleLookup[x] * scale) + (Vector3.forward * scale * 0.1f));
+                Primitive primitive = Primitive.Create(PrimitiveType.Cube, p, scale: (primitiveScaleLookup[x] * scale) + (Vector3.forward * scale * 0.1f), spawn: false);
+                //if (visible[x] == '0')
+                primitive.Color = Color.white;
                 if (visible[x] == '0')
-                    primitive.Color = Color.white;
-                else
-                    primitive.Color = Color.black;
+                {
+                    primitive.Spawn();
+                }
+                //else
+                    //primitive.Color = Color.black;
                 primitives.Insert(x,primitive);
             }
         }
@@ -175,7 +163,6 @@ namespace Desert_Bus_SCP_SL
         public void setNumber(int n)
         {
             string PaddedResult = n.ToString().PadLeft(3, '0');
-            //Exiled.API.Features.Log.Debug(PaddedResult);
             int x = 0;
             foreach (Digit d in Digits)
             {

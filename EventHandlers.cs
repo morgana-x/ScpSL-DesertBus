@@ -9,6 +9,8 @@ using Exiled.Events.EventArgs.Server;
 using Exiled.Events.EventArgs.Cassie;
 using Exiled.Events.EventArgs.Map;
 using Exiled.Events.EventArgs.Warhead;
+using CustomPlayerEffects;
+using FacilitySoundtrack;
 
 namespace Desert_Bus_SCP_SL
 {
@@ -118,6 +120,7 @@ namespace Desert_Bus_SCP_SL
             {
                 Plugin.Instance.bus.points.updateCustomInfo(ev.Player.UserId);
             }
+            ev.Player.EnableEffect(Exiled.API.Enums.EffectType.SoundtrackMute, duration: 0, false);
         }
         public void OnPlayerNoClip(TogglingNoClipEventArgs ev)
         {

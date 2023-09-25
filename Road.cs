@@ -45,6 +45,11 @@ namespace Desert_Bus_SCP_SL
 
         public int roadLength = 50;
         int progress = 0;
+
+        public List<Primitive> randomFlyByObjects = new List<Primitive>();
+        public Primitive CurrentFlybyObject = null;
+        public float nextFlyByObject = 0;
+        public System.Random rnd = new System.Random();
         public void updatePosition(Vector3 VirtalPosition,float deltaTime) //Vector3 VirtualEularAngles, float deltaTime)
         {
             foreach (Primitive p in stationaryPieces)
@@ -52,6 +57,10 @@ namespace Desert_Bus_SCP_SL
                 //p.Rotation.eulerAngles.Set(VirtualEularAngles.x, VirtualEularAngles.y, VirtualEularAngles.z);
                 p.Position = new Vector3(VirtalPosition.x, p.Position.y, p.Position.z); // VirtalPosition;
                 //p.Rotation = p.Rotation;
+            }
+            if (bus.speed <= 0)
+            {
+                return;
             }
             int x = 0;
             foreach (Primitive p in whiteLines)
@@ -65,6 +74,28 @@ namespace Desert_Bus_SCP_SL
                 }
                 x++;
             }
+            /*if (CurrentFlybyObject != null)
+            {
+                CurrentFlybyObject.Position = new Vector3(VirtalPosition.x, CurrentFlybyObject.Position.y, CurrentFlybyObject.Position.z);
+                CurrentFlybyObject.Position += Vector3.right * -10;
+                CurrentFlybyObject.Position = CurrentFlybyObject.Position + (Vector3.back * bus.speed * deltaTime);
+                if (Vector3.Distance(CurrentFlybyObject.Position, startPos) > 50)
+                {
+                    CurrentFlybyObject.Position = Vector3.zero;
+                    CurrentFlybyObject = null;
+                    nextFlyByObject = rnd.Next(200, 1000);
+                }
+
+            }
+            else
+            {
+                nextFlyByObject -= bus.speed * deltaTime;
+                if (nextFlyByObject <= 0)
+                {
+                    CurrentFlybyObject = randomFlyByObjects.RandomItem();
+                    CurrentFlybyObject.Position = startPos + Vector3.right * -10;
+                }
+            }*/
         }
         public void spawnModel(Vector3 Position)
         {
@@ -96,10 +127,10 @@ namespace Desert_Bus_SCP_SL
                 whiteLine.Type = PrimitiveType.Cube;
                 whiteLines.Add(whiteLine);
             }
-            /*Primitive whiteLine = Primitive.Create(startPos, scale: whiteScale);
-            whiteLine.Color = Color.yellow;
-            whiteLine.Type = PrimitiveType.Cube;
-            whiteLines.Add(whiteLine);*/
+           // Primitive rock = Primitive.Create(PrimitiveType.Cube, Vector3.zero, scale: Vector3.one * 0.5f);
+           // rock.Color = GetColorFromString("#d9a036");
+           // randomFlyByObjects.Add(rock);
+
         }
         public Road(Bus b)
         {

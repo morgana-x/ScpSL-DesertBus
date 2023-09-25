@@ -47,6 +47,7 @@ namespace Desert_Bus_SCP_SL
             return p;
         }
         public SevenSegmentDisplay speedDisplay;
+        public SevenSegmentDisplay pointsDisplay;
         public void SpawnButtons(Vector3 position)
         {
             Vector3 upO = Vector3.up * 1f;
@@ -55,7 +56,7 @@ namespace Desert_Bus_SCP_SL
             Vector3 fwd = Vector3.fwd;
             controlButtons.Button_SteerRight = spawnPickup( position + (upO*1.5f) + (RightO *-1.7f));
             controlButtons.Button_SteerLeft = spawnPickup( position + (upO * 1.5f) + (RightO * -2.2f));
-            controlButtons.Button_Door = spawnPickup( position + (upO *0.7f) + (RightO * -1f));
+            controlButtons.Button_Door = spawnPickup( position + (upO *0.75f) + (RightO * -1f) + (fwd * 0.25f));
             controlButtons.Button_Acceleration = spawnPickup( position + (upO * 0.55f) + (RightO * -2));
 
             SpawnSeat(position + (upO * 0.3f) + (Vector3.back * 1.5f)  + (RightO * -1.9f));
@@ -65,26 +66,13 @@ namespace Desert_Bus_SCP_SL
             SteeringWheel.Type = PrimitiveType.Cube;
             SteeringWheel.Color = Color.black;
 
-
+            pointsDisplay = new SevenSegmentDisplay(position + (upO * 0.7f) + (RightO * -1.3f), 3, Sscale: 0.05f);
             distanceDisplay = new SevenSegmentDisplay(position + (upO * 1f) + (RightO * -1.3f), 3, Sscale:0.05f);
             speedDisplay = new SevenSegmentDisplay(position + (upO * 1.3f) + (RightO * -1.3f), 3, Sscale: 0.05f);
             //distanceDisplay.setNumber(352);
 
         }
         SevenSegmentDisplay distanceDisplay;
-        Primitive SpeedDialHand;
-        public void SpawnSpeedDial(Vector3 position)
-        {
-            Primitive SpeedDialBG = Primitive.Create(position);
-            SpeedDialBG.Type = PrimitiveType.Cylinder;
-            SpeedDialBG.Scale = new Vector3(0.5f, 0.1f, 0.1f);
-            SpeedDialBG.Color = Color.black;
-
-            SpeedDialHand = Primitive.Create(position);
-            SpeedDialHand.Type = PrimitiveType.Cube;
-            SpeedDialHand.Color = Color.red;
-            SpeedDialHand.Scale = new Vector3(0.5f, 0.1f, 0.1f);
-        }
         public static UnityEngine.Color GetColorFromString(string colorText)
         {
             UnityEngine.Color color = new UnityEngine.Color(-1f, -1f, -1f);
@@ -346,6 +334,8 @@ namespace Desert_Bus_SCP_SL
 
         public float deltaTime = 1;
         public float lastTime = 0;
+
+        public int pointsTotal = 0;
         public void Update()
         {
             deltaTime = Time.time - lastTime;
@@ -372,7 +362,7 @@ namespace Desert_Bus_SCP_SL
                 distanceDisplay.setNumber(distanceMiles); // I think this is in miles (Idk im australian, stupid american stuff!!~212`~)
                 DistanceMiles = distanceMiles;
             }
-            if (Distance > 579364)
+            if (Distance >  579364)
             {
                 points.givePointsAll();
                 foreach(Player pl in Player.List)
@@ -380,12 +370,17 @@ namespace Desert_Bus_SCP_SL
                     pl.Broadcast(5, "<color=yellow>You have travelled 367 miles!</color>\n<color=green>+1</color> Point");
                 }
                 Distance = 0;
+                pointsTotal += 1;
+                if (pointsTotal > 99)
+                    pointsTotal = 99;
+                pointsDisplay.setNumber(pointsTotal);
+
             }
 
             float friction = 1;
             if (isOnSideOfRoad())
                 friction = Plugin.Instance.Config.busConfig.frictionMultiplier;
-            speed = speed - (Plugin.Instance.Config.busConfig.deccelerationSpeed * friction);
+            speed = speed - (Plugin.Instance.Config.busConfig.deccelerationSpeed * friction * deltaTime);
             if (speed > Plugin.Instance.Config.busConfig.maxSpeed)
                 speed = Plugin.Instance.Config.busConfig.maxSpeed;
             else if (speed < 0)
