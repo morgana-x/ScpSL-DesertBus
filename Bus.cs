@@ -31,6 +31,8 @@ namespace Desert_Bus_SCP_SL
 
         public Road road;
 
+        
+
         public Vector3 VirtualPosition = Vector3.zero;
         public Vector3 VirtualEulerAngles = Vector3.zero;
 

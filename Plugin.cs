@@ -75,6 +75,9 @@ namespace Desert_Bus_SCP_SL
 
             Exiled.Events.Handlers.Warhead.Detonating += _handlers.WarheadDetonating;
 
+            Exiled.Events.Handlers.Warhead.ChangingLeverStatus += _handlers.WarheadLeverStatusChange;
+
+            Exiled.Events.Handlers.Map.AnnouncingDecontamination += _handlers.AnnouncingDecontamination;
 
         }
 
@@ -109,6 +112,10 @@ namespace Desert_Bus_SCP_SL
             Exiled.Events.Handlers.Map.Decontaminating -= _handlers.Decontaminating;
 
             Exiled.Events.Handlers.Warhead.Detonating -= _handlers.WarheadDetonating;
+
+            Exiled.Events.Handlers.Warhead.ChangingLeverStatus -= _handlers.WarheadLeverStatusChange;
+
+            Exiled.Events.Handlers.Map.AnnouncingDecontamination -= _handlers.AnnouncingDecontamination;
 
             _handlers.DeInit();
             _handlers = null;

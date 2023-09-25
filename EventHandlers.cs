@@ -11,6 +11,7 @@ using Exiled.Events.EventArgs.Map;
 using Exiled.Events.EventArgs.Warhead;
 using CustomPlayerEffects;
 using FacilitySoundtrack;
+using Respawning;
 
 namespace Desert_Bus_SCP_SL
 {
@@ -34,6 +35,9 @@ namespace Desert_Bus_SCP_SL
         public void RoundStarted()
         {
             Round.IsLocked = true;
+            Map.AmbientSoundPlayer.StopAllCoroutines();
+            Cassie.Announcer.enabled = false;
+            Room.Get(Exiled.API.Enums.RoomType.Surface).Color = Color.white;
         }
         public void Init()
         {
@@ -69,16 +73,14 @@ namespace Desert_Bus_SCP_SL
         }
         public void OnPlayerChangingRole(ChangingRoleEventArgs ev)
         {
-            if ((ev.Reason == Exiled.API.Enums.SpawnReason.ForceClass && !Plugin.Instance.Config.playerConfig.spawnRoles.Contains(ev.NewRole) &&  !Plugin.Instance.Config.remoteAdminConfig.ChangeRolesEnabled))
+            if ((ev.Reason == Exiled.API.Enums.SpawnReason.ForceClass &&  !Plugin.Instance.Config.remoteAdminConfig.ChangeRolesEnabled))
             {
                 ev.IsAllowed = false;
                 return;
             }
 
-            if (ev.Reason == Exiled.API.Enums.SpawnReason.RoundStart)
-            {
-                ev.NewRole = Plugin.Instance.Config.playerConfig.spawnRoles.RandomItem();
-            }
+            ev.NewRole = Plugin.Instance.Config.playerConfig.spawnRoles.RandomItem();
+
             if (Plugin.Instance.Config.playerConfig.noInventory)
             {
                 ev.ShouldPreserveInventory = false;
@@ -99,6 +101,14 @@ namespace Desert_Bus_SCP_SL
         {
             ev.IsAllowed = false;
         }
+        public void WarheadLeverStatusChange (ChangingLeverStatusEventArgs ev)
+        {
+            ev.IsAllowed = false;
+        }
+
+        public void AnnouncingDecontamination( AnnouncingDecontaminationEventArgs ev)
+        {
+        }
 
         public void OnPlayerSpawning(SpawningEventArgs ev)
         {
@@ -112,6 +122,7 @@ namespace Desert_Bus_SCP_SL
         public void WarheadDetonating(DetonatingEventArgs ev)
         {
             ev.IsAllowed = false;
+            Room.Get(Exiled.API.Enums.RoomType.Surface).Color = Color.white;
         }
         public void OnPlayerSpawned(SpawnedEventArgs ev)
         {
